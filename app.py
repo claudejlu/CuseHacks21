@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, session
-from flask_socketio import SocketIO, send
+from flask_socketio import SocketIO, send, join_room, leave_room
 from RoomForm import RoomForm
 
 app = Flask(__name__)
@@ -8,8 +8,22 @@ socketio = SocketIO(app)
 
 @socketio.on('text', namespace='/chat')
 def text(message):
-
+    room = session.get('room', '')
     send(message['msg'], room=room)
+
+@socketio.on('join', namespace='/chat')
+def on_join(data):
+    name = session.get('name', '')
+    room = session.get('room', '')
+    join_room(room)
+    send(name + ' has entered the room.', room=room)
+
+@socketio.on('leave', namespace='/chat')
+def on_leave(data):
+    name = session.get('name', '')
+    room = session.get('room', '')
+    leave_room(room)
+    send(name + ' has left the room.', room=room)
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -27,7 +41,7 @@ def chatRoom():
     room = session.get('room', '')
 
     if name == '' or room == '':
-        return render_template('index.html')
+        return redirect(url_for('/'))
     
     return render_template('chatRoom.html', name=name, room=room)
 
