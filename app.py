@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from flask_socketio import SocketIO, send, join_room, leave_room
 from RoomForm import RoomForm
+from roomGenerator import room_generator
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'mySecretKey'
@@ -25,13 +26,16 @@ def on_leave(data):
     leave_room(room)
     send(name + ' has left the room.', room=room)
 
-
 @app.route('/', methods=['GET', 'POST'])
 def index():
     form = RoomForm(request.form)
     if request.method == 'POST' and form.validate():
         session['name'] = form.name.data
-        session['room'] = form.room.data
+        if len(form.room.data) == 0:
+            room_id = room_generator()
+            session['room'] = room_id
+        else:
+            session['room'] = form.room.data
         return redirect(url_for('chatRoom'))
     return render_template('index.html', form=form)
 
