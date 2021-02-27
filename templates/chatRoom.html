@@ -20,6 +20,7 @@
         <ul id='messagesInRoom'>
         </ul>
     </div>
+    <div id='lyrics'></div>
 
     <form id='messageSender'>
         <input type='text' id='message' placeholder="Enter your message">
@@ -38,14 +39,28 @@
                 // $('#usersInRoom').append('<li id=' + '{{ name }}' + '>' + '{{ name }}' + '</li>')
             })
 
+            socket.on('showLyrics', function(song) {
+                $('<p>' + song + '</p>').appendTo('#lyrics')
+            })
+
             $('#messageSender').submit(function(e) {
                 e.preventDefault();
                 const msg = $('#message').val()
                 $('#message').val('')
                 socket.emit('text', {msg: msg})
+
+                let listOfSongs = [];
+
+                if (msg === 'Pick Song!') {
+                    $('#messagesInRoom li').each(function() {
+                        let li = $(this).text()
+                        listOfSongs.push(li);
+                    })
+                    socket.emit('lyrics', {songs: listOfSongs})
+                    $('#messagesInRoom').empty()
+                }
             });
-            
-            
+
             // socket.on('disconnect', function() {
             //     socket.emit('leave', {msg: name + "has disconnected!"})
             //     $('#' + name).remove();

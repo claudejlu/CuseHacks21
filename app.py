@@ -1,7 +1,9 @@
 from flask import Flask, render_template, request, redirect, url_for, session
-from flask_socketio import SocketIO, send, join_room, leave_room
+from flask_socketio import SocketIO, send, join_room, leave_room, emit
 from RoomForm import RoomForm
 from roomGenerator import room_generator
+import random
+from lyrics import getLyrics
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'mySecretKey'
@@ -26,6 +28,23 @@ def on_leave(data):
     leave_room(room)
     send(name + ' has left the room.', room=room)
 
+@socketio.on('lyrics', namespace='/chat')
+def lyrics(data):
+    songs = data['songs']
+    room = session.get('room', '')
+    lyrics = ''
+
+    while ("Verse" not in lyrics):
+        try:
+            index = random.randint(0, len(songs) - 1)
+            lyrics = getLyrics(songs[index])
+        except:
+            pass
+    
+    emit('showLyrics', lyrics, room=room)
+
+
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
     form = RoomForm(request.form)
@@ -34,8 +53,10 @@ def index():
         if len(form.room.data) == 0:
             room_id = room_generator()
             session['room'] = room_id
-        else:
+        elif len(form.room.data) == 6:
             session['room'] = form.room.data
+        else:
+            return render_template('index.html')
         return redirect(url_for('chatRoom'))
     return render_template('index.html', form=form)
 
