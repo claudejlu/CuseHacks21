@@ -27,7 +27,7 @@ socketio = SocketIO(app,cors_allowed_origins="*")
 def text(message):
     name = session.get('name', '')
     room = session.get('room', '')
-    send(name + ": " + message['msg'], room=room)
+    send(name + ":" + message['msg'], room=room)
 
 @socketio.on('join', namespace='/chatRoom')
 def on_join(data):
@@ -62,21 +62,25 @@ def lyrics(data):
     while ("Verse" not in lyrics):
         try:
             index = random.randint(0, len(songs) - 1)
-            words = songs[index].split(' ')
+
+            firstSplit = songs[index].split(':')[1]
+            words = firstSplit.split('#')
 
             print(words)
 
-            if (len(words) == 3):
-                lyrics = getLyrics(words[2])
+            if (len(words) == 2):
+                lyrics = getLyrics(words[0])
                 artistName = str(words[1])
-                songName = str(words[2])
+                songName = str(words[0])
         except:
             pass
+    
+    print(songName + artistName)
     
     link = findYoutubeLink(songName + artistName)
     downloadMP3(link, songName + artistName)
 
-    emit('showLyrics', {'lyrics': lyrics, 'filename': songName + artistName}, room=room)
+    emit('showLyrics', {'lyrics': lyrics, 'filename': songName + artistName, "songName": songName, "artistName": artistName}, room=room)
 
 
 

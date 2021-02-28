@@ -14,14 +14,14 @@ function addLocalVideo() {
 function connectButtonHandler(event) {
     event.preventDefault();
     if (!connected) {
-        let username = document.getElementById('username').getAttribute('value');
+        let username = usernameInput
         if (!username) {
             alert('Enter your name before connecting');
             return;
         }
         button.disabled = true;
         button.innerHTML = 'Connecting...';
-        connect(username).then(() => {
+        connect(usernameInput).then(() => {
             button.innerHTML = 'Leave call';
             button.disabled = false;
         }).catch(() => {
@@ -65,15 +65,18 @@ function participantConnected(participant) {
     let participantDiv = document.createElement('div');
     participantDiv.setAttribute('id', participant.sid);
     participantDiv.setAttribute('class', 'participant');
+    alert(5)
 
     let tracksDiv = document.createElement('div');
     participantDiv.appendChild(tracksDiv);
 
     let labelDiv = document.createElement('div');
-    labelDiv.innerHTML = participant.identity;
+    labelDiv.innerHTML = usernameInput
     participantDiv.appendChild(labelDiv);
 
     container.appendChild(participantDiv);
+    alert(6)
+
 
     participant.tracks.forEach(publication => {
         if (publication.isSubscribed)

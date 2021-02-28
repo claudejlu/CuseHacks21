@@ -45,15 +45,6 @@
   </div>
 
     <div class="container text-area">
-
-    <!-- <div class="row">
-      <div class="col-12">
-        <div class="video-section">
-          <img src="../static/styles/img/person.png">
-        </div>
-      </div>
-    </div> -->
-
     <div id="facecams" class="videoCall">
       <div id="local" class="participant"><div></div><div style="color:white">Me</div></div>
   </div>
@@ -95,7 +86,7 @@
           <p class="song-info">
             <span class="music-symbol">
               music  
-            </span>	&nbsp; Track Name - Artist </p>
+            </span>	&nbsp; <div id='songInfo'>Track Name - Artist</div></p>
         </div>
       </div>
       </div>
@@ -147,29 +138,22 @@
                 setTimeout(function(){
                   $('<p>' + data['lyrics'] + '</p>').appendTo('#lyrics')
                   $('#playAudio').empty()
+
+                  songName = data['songName']
+                  artistName = data['artistName']
+
+                  $('#songInfo').text(songName + " - " + artistName)
                   let filename = data['filename']
 
-
-
                   setTimeout(function(){
-
-                    console.log("Hello")
-                    console.log(filename)
-                    console.log(1)
-
                     let audio = document.createElement('audio');
                     audio.autoplay = true;
                     filename = filename + '.mp3'
                     let source = document.createElement('source');
                     source.src = "{{ url_for('static', filename='ADDSHARE2') }}".replace("ADDSHARE2", filename)
-                    // source.src = `"{{ url_for('static', filename='${cheese}.mp3') }}"`
-                    // source.src = filename
                     audio.append(source)
 
                     $('#playAudio').append(audio)}
-
-                  // input = "<audio autoplay><source src='{{ url_for('static', filename='" +  ''  + ".mp3') }}' /></audio>"
-                  // console.log(input)
                   , 5000);
             })
           })
