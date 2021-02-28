@@ -9,7 +9,9 @@ from dotenv import load_dotenv
 from twilio.jwt.access_token import AccessToken
 from twilio.jwt.access_token.grants import VideoGrant
 from cloudSQL import cloudSQL
-from downloadMusic import downloadMP3
+from downloadMusic import downloadMP3, findYoutubeLink
+import time
+
 
 load_dotenv()
 twilio_account_sid = os.environ.get('TWILIO_ACCOUNT_SID')
@@ -23,8 +25,9 @@ socketio = SocketIO(app,cors_allowed_origins="*")
 
 @socketio.on('text', namespace='/chatRoom')
 def text(message):
+    name = session.get('name', '')
     room = session.get('room', '')
-    send(message['msg'], room=room)
+    send(name + ": " + message['msg'], room=room)
 
 @socketio.on('join', namespace='/chatRoom')
 def on_join(data):
@@ -51,16 +54,29 @@ def lyrics(data):
     songs = data['songs']
     room = session.get('room', '')
     lyrics = ''
+    artistName = ''
+    songName = ''
+
+    print(songs)
 
     while ("Verse" not in lyrics):
         try:
             index = random.randint(0, len(songs) - 1)
-            lyrics = getLyrics(songs[index])
+            words = songs[index].split(' ')
+
+            print(words)
+
+            if (len(words) == 3):
+                lyrics = getLyrics(words[2])
+                artistName = str(words[1])
+                songName = str(words[2])
         except:
             pass
     
-    
-    emit('showLyrics', lyrics, room=room)
+    link = findYoutubeLink(songName + artistName)
+    downloadMP3(link, songName + artistName)
+
+    emit('showLyrics', {'lyrics': lyrics, 'filename': songName + artistName}, room=room)
 
 
 
@@ -87,7 +103,7 @@ def chatRoom():
     if name == '' or room == '':
         return redirect(url_for('/'))
     
-    return render_template('chatRooms.html', name=name, room=room)
+    return render_template('chatRoom.html', name=name, room=room)
 
 @app.route('/login', methods=['POST'])
 def login():

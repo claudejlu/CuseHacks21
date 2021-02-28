@@ -9,7 +9,7 @@ function addLocalVideo() {
         let video = document.getElementById('local').firstChild;
         video.appendChild(track.attach());
     });
-};
+}; 
 
 function connectButtonHandler(event) {
     event.preventDefault();
