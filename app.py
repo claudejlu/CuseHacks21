@@ -32,16 +32,17 @@ def on_join(data):
     cloudTool.addData('testdb', name, room)
     join_room(room)
     listOfPeople = cloudTool.listData('testdb', room)
-    print("These are my people")
-    print(listOfPeople)
-    send(name + ' has entered the room.', room=room, people=listOfPeople)
-    emit('showListOfPeople', listOfPeople)
+    res_list = [x[0] for x in listOfPeople]
+
+    send(name + ' has entered the room.', room=room)
+    emit('showListOfPeople', res_list)
 
 @socketio.on('leave', namespace='/chatRoom')
 def on_leave(data):
     name = session.get('name', '')
     room = session.get('room', '')
     leave_room(room)
+    cloudTool.removeData('testdb', room, name)
     send(name + ' has left the room.', room=room)
 
 @socketio.on('lyrics', namespace='/chatRoom')
