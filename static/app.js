@@ -1,9 +1,8 @@
 let connected = false;
-const username = document.getElementById('myName').getAttribute('value');
-const button = document.getElementById('leave_room');
-const container = document.getElementById('container');
+const usernameInput = document.getElementById('username').getAttribute('value');
+const button = document.getElementById('join_leave');
+const container = document.getElementById('facecams');
 let room;
-
 
 function addLocalVideo() {
     Twilio.Video.createLocalVideoTrack().then(track => {
@@ -12,27 +11,47 @@ function addLocalVideo() {
     });
 };
 
-function disconnectButtonHandler(event) {
+function connectButtonHandler(event) {
     event.preventDefault();
-    disconnect();
-    connected = false;
+    if (!connected) {
+        let username = document.getElementById('username').getAttribute('value');
+        if (!username) {
+            alert('Enter your name before connecting');
+            return;
+        }
+        button.disabled = true;
+        button.innerHTML = 'Connecting...';
+        connect(username).then(() => {
+            button.innerHTML = 'Leave call';
+            button.disabled = false;
+        }).catch(() => {
+            alert('Connection failed. Is the backend running?');
+            button.innerHTML = 'Join call';
+            button.disabled = false;    
+        });
+    }
+    else {
+        disconnect();
+        button.innerHTML = 'Join call';
+        connected = false;
+    }
 };
 
 function connect(username) {
     let promise = new Promise((resolve, reject) => {
+        console.log("Trying to connect")
+        // get a token from the back end
         fetch('/login', {
             method: 'POST',
             body: JSON.stringify({'username': username})
         }).then(res => res.json()).then(data => {
-            console.log("1")
+            // join video call
             return Twilio.Video.connect(data.token);
         }).then(_room => {
-            console.log("2")
             room = _room;
             room.participants.forEach(participantConnected);
             room.on('participantConnected', participantConnected);
             room.on('participantDisconnected', participantDisconnected);
-            console.log("3")
             connected = true;
             resolve();
         }).catch(() => {
@@ -80,13 +99,10 @@ function disconnect() {
     room.disconnect();
     while (container.lastChild.id != 'local')
         container.removeChild(container.lastChild);
+    button.innerHTML = 'Join call';
     connected = false;
-    window.location.href = 'http://localhost:5000/';
 };
 
-addLocalVideo();
-setTimeout(function(){
-    connect(username).then(() => {alert("You are connected!")}).catch(() => {alert("Sorry, we could not connect you")})
-}, 2000);
 
-button.addEventListener('click', disconnectButtonHandler);
+addLocalVideo();
+button.addEventListener('click', connectButtonHandler);

@@ -1,16 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Join or Create a Room</title>
-</head>
-<body>
-    <form action="/" method="POST">
-        <input type="text" placeholder="name" name="name" />
-        <input type="text"  placeholder="room" name="room" />
-        <input type='submit' name="join" value="Join Room">
-        <input type='submit' name="create" value="Create Room">
-    </form>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <!-- STYLES -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/styles.css') }}">
+
+    <script
+      src="https://kit.fontawesome.com/d2be2cf8f7.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <title>Rhythm</title>
+  </head>
+  <body class="home-bg">
+    <nav class="navbar justify-content-center">
+      <a class="navbar-brand" href="#">
+        <img src="" />
+      </a>
+    </nav>
+
+    <div class="container text-area">
+      <div class="row justify-content-center">
+        <img class="homepage-logo" src="../static/styles/img/logo.png" />
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12 form-area">
+
+            <!-- <form action="/" method="POST">
+                <input type="text" placeholder="name" name="name" />
+                <input type="text"  placeholder="room" name="room" />
+                <input type='submit' name="join" value="Join Room">
+                <input type='submit' name="create" value="Create Room">
+            </form> -->
+          <form action='/' method='POST'> 
+            <div class="row">
+                <div class="col-lg-2"></div>
+              <div class="col-lg-4">
+                <input
+                  type="text"
+                  class="form-control form-control-lg"
+                  placeholder="Enter Name"
+                  name="name"
+                />
+                <small id="passwordHelpBlock" style="color: white" class="form-text">
+                  Name has to greater than 4 characters
+                </small>
+              </div>
+              <div class="col-lg-4">
+                <input
+                  type="text"
+                  class="form-control form-control-lg"
+                  placeholder="Enter Room ID"
+                  name="room"
+                />
+                <small id="passwordHelpBlock" style="color: white" class="form-text">
+                  Leave Room ID empty if you want to create a new game
+                </small>
+              </div>
+              <div class="col-lg-2"></div>
+            </div>
+            <div class="row">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-4 col-sm-2">
+                        <div class="home-button-area">
+                        <button type="submit" class="btn btn-grad submit-btn" name="create">
+                            HOST GAME
+                        </button>
+                      </div>
+                </div>
+                <div class="col-lg-4 col-sm-2">
+                  <div class="home-button-area-r">
+                  <button type="submit" class="btn-grad btn submit-btn" name="join">
+                    JOIN GAME
+                  </button>
+                  </div>
+                </div>
+                <div class="col-lg-2"></div>
+         
+            </div>
+
+        </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- BOOTSTRAP JQUERY -->
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+
+    <script src="https://use.fontawesome.com/1da57db8ac.js"></script>
+  </body>
 </html>

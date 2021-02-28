@@ -1,0 +1,195 @@
+@font-face {
+    font-family: VCR;
+    src: url('fonts/VCR_OSD_MONO_1.001.ttf');
+  }
+
+  div{
+      font-family: VCR;
+  }
+
+  @font-face {
+    font-family: fontAwesome;
+    src: url('./fonts/Font\ Awesome\ 5\ Free-Solid-900.otf');
+  }
+
+.home-bg{
+    background: url('img/homepage-bg.png') no-repeat fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.homepage-logo{
+    max-width: 40%;
+    padding-bottom: 50px;
+    margin-top: 50px;
+}
+
+.text-area{
+    margin-top: 400px;
+}
+
+
+.btn-grad {
+    background-image: linear-gradient(to right, #080437 0%, #080437  51%, #080437 100%);
+}
+
+.btn-grad {
+   margin-top: 10px;
+   padding: 15px 45px;
+   text-align: center;
+   text-transform: uppercase;
+   transition: 0.5s;
+   background-size: 200% auto;
+   color: white;            
+   border-color: white;
+   border-radius: 10px;
+ }
+
+ .btn-grad:hover {
+    background-image: linear-gradient(to right, #428BD9 0%, #1B16FD  51%, #428BD9 100%);
+    background-position: right center; /* change the direction of the change here */
+   color: #fff;
+   text-decoration: none;
+   border-color: white;
+   box-shadow: 0 0 20px #16F9FD;
+ }
+
+ .home-button-area{
+     margin-top: 20px;
+     text-align: right;
+ }
+
+ .home-button-area-r{
+    margin-top: 20px;
+}
+
+/* ROOM CSS */
+
+.room-bg{
+    background: url('img/room-bg.png');
+    height: 100%;
+
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.lyrics-box{
+    background-color: #1c0c49b7;
+    color: white;
+    border-color: #FA61F7;
+    border-radius: 5px;
+    border-style: solid;
+    padding: 10px;
+    margin-top: 20px;
+}
+
+.chat-box{
+    background-color: #1c0c49b7;
+    color: white;
+    border-color: #FA61F7;
+    border-radius: 5px;
+    border-style: solid;
+    padding: 10px;
+    margin-top: 20px;
+}
+
+.chat-line{
+    background-color: #FA61F7;
+}
+
+.spotify-box{
+    background-color: #1c0c49b7;
+    color: white;
+    border-color: #FA61F7;
+    border-radius: 5px;
+    border-style: solid;
+    padding: 10px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.music-symbol{
+    font-family: fontAwesome;
+}
+
+.participant{
+    background-color: #1c0c49b7;
+    color: white;
+    border-color: #FA61F7;
+    border-radius: 5px;
+    border-style: solid;
+    padding: 10px;
+    text-align: center;
+}
+
+.room-info{
+    color: white;
+    padding-top: 20px;
+    margin-bottom: 20px;
+}
+
+.submit-btn {
+    background-image: linear-gradient(to right, #080437 0%, #080437  51%, #080437 100%);
+}
+
+
+.submit-btn  {
+   text-align: center;
+   text-transform: uppercase;
+   transition: 0.5s;
+   background-size: 200% auto;
+   color: white;            
+   border-color: white;
+   border-radius: 5px;
+   margin-left: 10px;
+
+ }
+
+ .submit-btn:hover {
+    background-image: linear-gradient(to right, #428BD9 0%, #1B16FD  51%, #428BD9 100%);
+    background-position: right center; /* change the direction of the change here */
+   color: #fff;
+   text-decoration: none;
+   border-color: white;
+   box-shadow: 0 0 20px #16F9FD;
+ }
+
+
+.chatbox li, ul{
+    list-style-type: none;
+    list-style-position: inside;
+    padding: 0px;
+    margin: 0px;
+    overflow:auto;
+    bottom:0;
+    max-height: 100%;
+    /*height:100%;*/
+}
+
+
+/** 
+    Responsive Design
+**/
+@media only screen and (max-width: 600px) {
+    .home-bg{
+        background-position: center;
+    }
+
+    .homepage-logo{
+        max-width: 50%;
+    }
+
+    .home-button-area{
+        text-align: center;
+    }
+
+    .home-button-area-r{
+        text-align: center;
+    }
+
+    #passwordHelpBlock{
+        margin-bottom: 20px;
+    }
+  }
