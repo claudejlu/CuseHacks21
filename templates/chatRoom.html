@@ -50,6 +50,12 @@
                 $('<p>' + song + '</p>').appendTo('#lyrics')
             })
 
+            socket.on('showListOfPeople', function(people) {
+                for (let i = 0; i < people.length; i++) {
+                    $('#usersInRoom').append('<li>' + people[i][0] + '</li>')
+                }
+            })
+
             $('#messageSender').submit(function(e) {
                 e.preventDefault();
                 const msg = $('#message').val()
@@ -78,7 +84,7 @@
             // })
         });
     </script>
-    <script src="//media.twiliocdn.com/sdk/js/video/releases/2.3.0/twilio-video.min.js"></script>
-    <script src="{{ url_for('static', filename='app.js') }}"></script>
+    <!-- <script src="//media.twiliocdn.com/sdk/js/video/releases/2.3.0/twilio-video.min.js"></script>
+    <script src="{{ url_for('static', filename='app.js') }}"></script> -->
 </body>
 </html>
