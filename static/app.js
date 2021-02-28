@@ -24,12 +24,15 @@ function connect(username) {
             method: 'POST',
             body: JSON.stringify({'username': username})
         }).then(res => res.json()).then(data => {
+            console.log("1")
             return Twilio.Video.connect(data.token);
         }).then(_room => {
+            console.log("2")
             room = _room;
             room.participants.forEach(participantConnected);
             room.on('participantConnected', participantConnected);
             room.on('participantDisconnected', participantDisconnected);
+            console.log("3")
             connected = true;
             resolve();
         }).catch(() => {
@@ -82,5 +85,8 @@ function disconnect() {
 };
 
 addLocalVideo();
-connect(username).then(() => {alert("You are connected!")}).catch(() => {alert("Sorry, we could not connect you")})
+setTimeout(function(){
+    connect(username).then(() => {alert("You are connected!")}).catch(() => {alert("Sorry, we could not connect you")})
+}, 2000);
+
 button.addEventListener('click', disconnectButtonHandler);
