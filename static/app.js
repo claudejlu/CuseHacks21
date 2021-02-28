@@ -14,16 +14,8 @@ function addLocalVideo() {
 
 function disconnectButtonHandler(event) {
     event.preventDefault();
-    if (!connected) {
-        if (!username) {
-            alert("We couldn't find your name?");
-            window.location.href = 'http://localhost:5000/'
-        }
-    }
-    else {
-        disconnect();
-        connected = false;
-    }
+    disconnect();
+    connected = false;
 };
 
 function connect(username) {
@@ -39,7 +31,6 @@ function connect(username) {
             room.on('participantConnected', participantConnected);
             room.on('participantDisconnected', participantDisconnected);
             connected = true;
-            console.log("5")
             resolve();
         }).catch(() => {
             reject();
@@ -91,5 +82,5 @@ function disconnect() {
 };
 
 addLocalVideo();
-button.addEventListener('click', disconnectButtonHandler);
 connect(username).then(() => {alert("You are connected!")}).catch(() => {alert("Sorry, we could not connect you")})
+button.addEventListener('click', disconnectButtonHandler);

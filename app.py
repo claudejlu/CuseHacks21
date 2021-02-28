@@ -8,36 +8,38 @@ import os
 from dotenv import load_dotenv
 from twilio.jwt.access_token import AccessToken
 from twilio.jwt.access_token.grants import VideoGrant
+from cloudSQL import cloudSQL
 
 load_dotenv()
 twilio_account_sid = os.environ.get('TWILIO_ACCOUNT_SID')
 twilio_api_key_sid = os.environ.get('TWILIO_API_KEY_SID')
 twilio_api_key_secret = os.environ.get('TWILIO_API_KEY_SECRET')
+cloudTool = cloudSQL()
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'mySecretKey'
-socketio = SocketIO(app)
+socketio = SocketIO(app,cors_allowed_origins="*")
 
-@socketio.on('text', namespace='/chat')
+@socketio.on('text', namespace='/chatRoom')
 def text(message):
     room = session.get('room', '')
     send(message['msg'], room=room)
 
-@socketio.on('join', namespace='/chat')
+@socketio.on('join', namespace='/chatRoom')
 def on_join(data):
     name = session.get('name', '')
     room = session.get('room', '')
     join_room(room)
-    send(name + ' has entered the room.', room=room)
+    send(name + ' has entered the room.', room=room, people=cloudTool.listData('testdb', room))
 
-@socketio.on('leave', namespace='/chat')
+@socketio.on('leave', namespace='/chatRoom')
 def on_leave(data):
     name = session.get('name', '')
     room = session.get('room', '')
     leave_room(room)
     send(name + ' has left the room.', room=room)
 
-@socketio.on('lyrics', namespace='/chat')
+@socketio.on('lyrics', namespace='/chatRoom')
 def lyrics(data):
     songs = data['songs']
     room = session.get('room', '')
@@ -49,6 +51,7 @@ def lyrics(data):
             lyrics = getLyrics(songs[index])
         except:
             pass
+    
     
     emit('showLyrics', lyrics, room=room)
 
