@@ -35,15 +35,15 @@
     </form>
     <script type='text/javascript'>
         $(document).ready(function() {
-            socket = io.connect('http://' + document.domain + ':' + location.port + '/chat');
-
-            socket.on('message', function(msg) {
-                $('#messagesInRoom').append('<li>' + msg + '</li>')
-            })
+            socket = io.connect('http://' + document.domain + ':' + location.port + '/chatRoom');
 
             socket.on('connect', function() {
                 socket.emit('join', {})
-                // $('#usersInRoom').append('<li id=' + '{{ name }}' + '>' + '{{ name }}' + '</li>')
+            })
+
+
+            socket.on('message', function(msg) {
+                $('#messagesInRoom').append('<li>' + msg + '</li>')
             })
 
             socket.on('showLyrics', function(song) {
@@ -69,6 +69,8 @@
                     $('#messagesInRoom').empty()
                 }
             });
+
+            $()
 
             // socket.on('disconnect', function() {
             //     socket.emit('leave', {msg: name + "has disconnected!"})
