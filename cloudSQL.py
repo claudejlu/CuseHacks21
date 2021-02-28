@@ -28,15 +28,15 @@ class cloudSQL():
         cnxn.commit()
         cnxn.close()
 
-    # data = (username, room)
-    def addData(self, databaseName, data):
+    # data = ('username', 'room')
+    def addData(self, databaseName, name, room):
         config['database'] = databaseName 
         cnxn = mysql.connector.connect(**config)
         cursor = cnxn.cursor()
 
-        query = "INSERT INTO roomsTable (username, room) VALUES "  + data +  ";"
-        cursor.execute(query)
-        cnxn.commit()  # and commit changes
+        query = "INSERT INTO roomsTable VALUES (%s, %s);"
+        cursor.execute(query, (name, room))
+        cnxn.commit()
         cnxn.close()
 
     def listData(self, databaseName, room):
@@ -44,11 +44,43 @@ class cloudSQL():
         cnxn = mysql.connector.connect(**config)
         cursor = cnxn.cursor()
 
-        query = "SELECT * FROM roomsTable WHERE room=" + room +  ";"
-        cursor.execute(query)
-        out = cursor.fetchAll()
+        query = "SELECT * FROM roomsTable WHERE room = %s;"
+        # query = "SELECT * FROM roomsTable;"
+
+        cursor.execute(query, (room,))
+        # cursor.execute(query)
+        out = cursor.fetchall()
         cnxn.close()
         return out
+    
+    def removeData(self, databaseName, room, name):
+        config['database'] = databaseName 
+        cnxn = mysql.connector.connect(**config)
+        cursor = cnxn.cursor()
+
+        query = "DELETE FROM roomsTable WHERE room = %s AND username = %s;"
+        cursor.execute(query, (room, name))
+        cnxn.commit()
+        cnxn.close()
+
+
+
+# x = cloudSQL()
+# x.addData('testdb', 'Fred', '123')
+# x.removeData('testdb', '123', 'Fred')
+# output = x.listData('testdb', '123')
+# print(output)
+
+
+# config['database'] = 'testdb' 
+# cnxn = mysql.connector.connect(**config)
+# cursor = cnxn.cursor()
+
+# query = "SELECT * FROM roomsTable;"
+# cursor.execute(query)
+# out = cursor.fetchall()
+# print(out)
+# cnxn.close()
 
 
 

@@ -29,8 +29,13 @@ def text(message):
 def on_join(data):
     name = session.get('name', '')
     room = session.get('room', '')
+    cloudTool.addData('testdb', name, room)
     join_room(room)
-    send(name + ' has entered the room.', room=room, people=cloudTool.listData('testdb', room))
+    listOfPeople = cloudTool.listData('testdb', room)
+    print("These are my people")
+    print(listOfPeople)
+    send(name + ' has entered the room.', room=room, people=listOfPeople)
+    emit('showListOfPeople', listOfPeople)
 
 @socketio.on('leave', namespace='/chatRoom')
 def on_leave(data):
