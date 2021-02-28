@@ -23,7 +23,7 @@
 .homepage-logo{
     max-width: 40%;
     padding-bottom: 50px;
-    margin-top: 100px;
+    margin-top: 50px;
 }
 
 .text-area{
@@ -143,6 +143,8 @@
    color: white;            
    border-color: white;
    border-radius: 5px;
+   margin-left: 10px;
+
  }
 
  .submit-btn:hover {
@@ -155,6 +157,41 @@
  }
 
 
+.chatbox li, ul{
+    list-style-type: none;
+    list-style-position: inside;
+    padding: 0px;
+    margin: 0px;
+    overflow:auto;
+    bottom:0;
+    max-height: 100%;
+    /*height:100%;*/
+}
 
 
 
+
+/** 
+    Responsive Design
+**/
+@media only screen and (max-width: 600px) {
+    .home-bg{
+        background-position: center;
+    }
+
+    .homepage-logo{
+        max-width: 50%;
+    }
+
+    .home-button-area{
+        text-align: center;
+    }
+
+    .home-button-area-r{
+        text-align: center;
+    }
+
+    #passwordHelpBlock{
+        margin-bottom: 20px;
+    }
+  }

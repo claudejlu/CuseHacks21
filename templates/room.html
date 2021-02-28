@@ -31,13 +31,17 @@
 
     <div class="container text-area">
 
-    <div class="row">
+    <!-- <div class="row">
       <div class="col-12">
         <div class="video-section">
           <img src="../static/styles/img/person.png">
         </div>
       </div>
-    </div>
+    </div> -->
+
+    <div id="container" class="container video-section">
+      <div id="local" class="participant"><div></div><div id="myName" value='{{ name }}'>Me</div></div>
+  </div>
     
     <div class="row">
       <div class="col-8">
@@ -60,17 +64,19 @@
       <div class="col-4">
         <div class="chat-box">
           <ul>
-            This where the chat messages go? 
+            <div>
+            <li>Ken: This where the chat messages go? </li>
+            <li>Ben: This where the chat messages go what the?? </li>
+          </div>
           </ul>
-           <div class="form-inline">
-            <form id='messageSender'>
-              <hr class="chat-line">
-              <input class="form-control chat-box-input" type='text' id='message' placeholder="Type a message..">
-              <button type="submit" class="btn submit-btn">
-                SEND
-            </button>
-        </form>
-      </div>
+          <hr class="chat-line">
+            <form class="form-inline" id='messageSender'>
+              <div class="form-group">
+                <input class="form-control chat-box-input" type='text' id='message' placeholder="Type a message..">
+              </div>
+              <button type="submit" class="btn submit-btn"> SEND </button>
+            </form>
+
         </div>
       </div>
       
